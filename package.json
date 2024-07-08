@@ -1,0 +1,50 @@
+{
+  "name": "ts_tool_kits",
+  "version": "1.0.0",
+  "description": "Toolkits programmed by typescript",
+  "main": "index.js",
+  "scripts": {
+    "doc": "apidoc -i src -o apidoc",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xuxconan/TsToolKits.git"
+  },
+  "keywords": [
+    "typescript",
+    "toolkits"
+  ],
+  "author": "XUX",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/xuxconan/TsToolKits/issues"
+  },
+  "homepage": "https://github.com/xuxconan/TsToolKits#readme",
+  "devDependencies": {
+    "@types/chai": "^4.3.16",
+    "@types/mocha": "^10.0.6",
+    "@types/webpack-env": "^1.18.5",
+    "@typescript-eslint/eslint-plugin": "^7.13.1",
+    "@typescript-eslint/parser": "^7.13.1",
+    "apidoc": "^1.2.0",
+    "chai": "^5.1.1",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "javascript-obfuscator": "^4.1.1",
+    "mocha": "^10.4.0",
+    "mochapack": "^2.1.4",
+    "prettier": "^3.3.2",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.4.5",
+    "webpack": "^5.92.1",
+    "webpack-cli": "^5.1.4",
+    "webpack-env": "^0.8.0"
+  },
+  "dependencies": {
+    "joi": "^17.13.3",
+    "lil-gui": "^0.19.2",
+    "lodash": "^4.17.21"
+  }
+}
