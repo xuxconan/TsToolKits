@@ -1,4 +1,13 @@
 import Joi from "joi";
+const apool_options_schema = Joi.object({
+  create: Joi.function().required(),
+  dispose: Joi.function(),
+  reuse: Joi.function(),
+  recycle: Joi.function(),
+  warm_up: Joi.number().integer().min(0),
+  max_count: Joi.number().integer().min(0),
+  inject_pool_funcs: Joi.boolean(),
+});
 
 type APoolObjectWithFuncs<T> = T & {
   $Recycle: (...params: any[]) => void;
@@ -38,16 +47,6 @@ export default class APool<
   O extends APoolOptions<T>,
   INJECT_FUNCS extends O["inject_pool_funcs"],
 > {
-  private static options_schema = Joi.object({
-    create: Joi.function().required(),
-    dispose: Joi.function(),
-    reuse: Joi.function(),
-    recycle: Joi.function(),
-    warm_up: Joi.number().integer().min(0),
-    max_count: Joi.number().integer().min(0),
-    inject_pool_funcs: Joi.boolean(),
-  });
-
   private list?: Array<T>;
 
   private create: APoolObjectCreate<T>;
@@ -65,7 +64,7 @@ export default class APool<
    * @apiVersion 1.0.0
    */
   constructor(options?: O, ...params: any[]) {
-    const { error, value } = APool.options_schema.validate(options);
+    const { error, value } = apool_options_schema.validate(options);
     if (error) throw error;
 
     this.create = value.create;
@@ -115,14 +114,11 @@ export default class APool<
     for (let i = 0; i < num; i++) {
       proList.push(this.create(...params));
     }
-    const resList = await Promise.allSettled(proList);
-    resList
-      .filter((res) => res.status === "fulfilled")
-      .map((res) => res.value)
-      .forEach((obj) => {
-        this.injectFuncs(obj);
-        list.push(obj);
-      });
+    const resList = await Promise.all(proList);
+    resList.forEach((obj) => {
+      this.injectFuncs(obj);
+      list.push(obj);
+    });
   }
 
   async Get(
