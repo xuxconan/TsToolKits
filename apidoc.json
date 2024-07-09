@@ -1,7 +1,11 @@
 {
-  "name": "ts_tool_kits",
+  "name": "TsToolKits",
   "version": "1.0.0",
   "description": "Toolkits programmed by typescript",
   "title": "TsToolKits",
-  "url" : ""
+  "url" : "",
+  "template": {
+    "aloneDisplay": true,
+    "showRequiredLabels": true
+  }
 }
