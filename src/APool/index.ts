@@ -39,7 +39,8 @@ type APoolOptions<T> = {
 };
 
 /**
- * @apiGroup APool
+ * @apiGroup APool-异步对象池
+ * @apiVersion 1.0.0
  * @apiDescription 异步对象池
  */
 export default class APool<
@@ -56,12 +57,28 @@ export default class APool<
   private max_count?: number;
   private inject_pool_funcs?: boolean;
 
+  /**
+   * @apiGroup APool-异步对象池
+   * @apiVersion 1.0.0
+   * @api {UInt} Count 【变量】Count 池内对象个数
+   **/
   Count: number;
 
   /**
-   * @api {constructor} constructor(options,...params) 创建对象池
-   * @apiGroup APool
+   * @apiGroup APool-异步对象池
    * @apiVersion 1.0.0
+   * @api {constructor} constructor(options,...params) 【构造】APool 创建对象池
+   * @apiParam {Object} options 对象池配置
+   * @apiParam {Function=create(...params:Any):Promise<T>} options.create 对象创建方法
+   * @apiParam {Function=dispose(obj:T,...params:Any):Promise} [options.dispose] 对象销毁方法
+   * @apiParam {Function=reuse(obj:T,...params:Any):Promise} [options.reuse] 对象复用方法
+   * @apiParam {Function=recycle(obj:T,...params:Any):Promise} [options.recycle] 对象回收方法
+   * @apiParam {UInt} [options.warm_up] 预热数量
+   * @apiParam {UInt} [options.max_count] 最大数量
+   * @apiParam {Boolean} [options.inject_pool_funcs] 是否将对象池方法注入到对象中
+   * @apiParam {Array=Any} [params] 预热参数
+   * @apiSuccess (返回) {Object=Pool} pool 返回对象池实例
+   * @apiError (错误) {Error} SchemaCheckFail 参数验证错误
    */
   constructor(options?: O, ...params: any[]) {
     const { error, value } = apool_options_schema.validate(options);
@@ -99,6 +116,14 @@ export default class APool<
     return;
   }
 
+  /**
+   * @apiGroup APool-异步对象池
+   * @apiVersion 1.0.0
+   * @api {function} WarmUp(num,...params) 【方法】WarmUp 预热对象池
+   * @apiParam {UInt} num 预热数量
+   * @apiParam {Array=Any} [params] 创建/复用参数
+   * @apiError (异步错误) {Error} SchemaCheckFail 参数验证错误
+   */
   async WarmUp(num: number, ...params: any[]) {
     const { error } = Joi.number().required().integer().min(0).validate(num);
     if (error) throw error;
@@ -121,6 +146,14 @@ export default class APool<
     });
   }
 
+  /**
+   * @apiGroup APool-异步对象池
+   * @apiVersion 1.0.0
+   * @api {function} Get(...params) 【方法】Get 获取对象
+   * @apiParam {Array=Any} [params] 创建/复用参数
+   * @apiSuccess (异步返回) {Object=T} obj 异步返回对象实例
+   * @apiSuccess (异步返回) {Function=$Recycle(...params:Any)} [obj.$Recycle] 对象池的回收方法（当inject_pool_funcs为true时）
+   */
   async Get(
     ...params: any[]
   ): Promise<INJECT_FUNCS extends true ? APoolObjectWithFuncs<T> : T> {
@@ -135,6 +168,14 @@ export default class APool<
     return obj as INJECT_FUNCS extends true ? APoolObjectWithFuncs<T> : T;
   }
 
+  /**
+   * @apiGroup APool-异步对象池
+   * @apiVersion 1.0.0
+   * @api {function} Recycle(obj,...params) 【方法】Recycle 回收对象
+   * @apiParam {Object=T} obj 对象
+   * @apiParam {Array=Any} [params] 回收/销毁参数
+   * @apiError (异步错误) {Error} SchemaCheckFail 参数验证错误
+   */
   async Recycle(obj: APoolObject<T>, ...params: any[]) {
     let list = this.list;
     if (!list) this.list = list = [];
@@ -148,6 +189,12 @@ export default class APool<
     list.push(obj);
   }
 
+  /**
+   * @apiGroup APool-异步对象池
+   * @apiVersion 1.0.0
+   * @api {function} Clear(...params) 【方法】Clear 清空对象池
+   * @apiParam {Array=Any} [params] 回收/销毁参数
+   */
   async Clear(...params: any[]) {
     const list = this.list;
     if (!list) return;

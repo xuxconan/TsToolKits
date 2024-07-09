@@ -30,7 +30,7 @@ type PoolOptions<T> = {
 };
 
 /**
- * @apiGroup Pool
+ * @apiGroup Pool-对象池
  * @apiVersion 1.0.0
  * @apiDescription 对象池
  */
@@ -49,14 +49,14 @@ export default class Pool<
   private inject_pool_funcs?: boolean;
 
   /**
-   * @apiGroup Pool
+   * @apiGroup Pool-对象池
    * @apiVersion 1.0.0
    * @api {UInt} Count 【变量】Count 池内对象个数
    **/
   Count: number;
 
   /**
-   * @apiGroup Pool
+   * @apiGroup Pool-对象池
    * @apiVersion 1.0.0
    * @api {constructor} constructor(options,...params) 【构造】Pool 创建对象池
    * @apiParam {Object} options 对象池配置
@@ -107,7 +107,7 @@ export default class Pool<
   }
 
   /**
-   * @apiGroup Pool
+   * @apiGroup Pool-对象池
    * @apiVersion 1.0.0
    * @api {function} WarmUp(num,...params) 【方法】WarmUp 预热对象池
    * @apiParam {UInt} num 预热数量
@@ -133,7 +133,7 @@ export default class Pool<
   }
 
   /**
-   * @apiGroup Pool
+   * @apiGroup Pool-对象池
    * @apiVersion 1.0.0
    * @api {function} Get(...params) 【方法】Get 获取对象
    * @apiParam {Array=Any} [params] 创建/复用参数
@@ -155,7 +155,7 @@ export default class Pool<
   }
 
   /**
-   * @apiGroup Pool
+   * @apiGroup Pool-对象池
    * @apiVersion 1.0.0
    * @api {function} Recycle(obj,...params) 【方法】Recycle 回收对象
    * @apiParam {Object=T} obj 对象
@@ -178,7 +178,7 @@ export default class Pool<
   }
 
   /**
-   * @apiGroup Pool
+   * @apiGroup Pool-对象池
    * @apiVersion 1.0.0
    * @api {function} Clear(...params) 【方法】Clear 清空对象池
    * @apiParam {Array=Any} [params] 回收/销毁参数
