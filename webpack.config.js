@@ -13,9 +13,10 @@ const { SOURCEMAP, MINIMIZED, OBFUSCATE } = process.env || {};
 /* #region entry, output, resolve, performance, experiments */
 const entry = {
   // Test: "./src/Test", // 测试
-  index: "./src", // 总入口
-  Pool: "./src/Pool", // 对象池
-  APool: "./src/APool", // 异步对象池
+  XUXTsToolKits: "./src", // 总入口
+  ObjectPool: "./src/ObjectPool", // 对象池
+  SandBox: "./src/SandBox", // 沙盒
+  SignalSlot: "./src/SignalSlot", // 信号槽
 };
 const output = {
   path: path.resolve(__dirname, "dist"),
