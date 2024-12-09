@@ -26,16 +26,13 @@
     "env:local": "dotenvx run -f .env.local -- ",
     "env:dev": "dotenvx run -f .env.dev -- ",
     "env:prod": "dotenvx run -f .env.prod -- ",
-
     "serve": "npm run env:local webpack-dev-server --open",
     "serve:local": "npm run env:local webpack-dev-server --open",
     "serve:dev": "npm run env:dev webpack-dev-server --open",
     "serve:prod": "npm run env:prod webpack-dev-server --open",
-
     "build": "npm run env:prod webpack",
     "build:dev": "npm run env:dev webpack",
     "build:prod": "npm run env:prod webpack",
-
     "doc": "apidoc -i src -o apidoc",
     "test": "test"
   },
@@ -82,6 +79,7 @@
     "joi": "^17.13.3",
     "lil-gui": "^0.19.2",
     "lodash": "^4.17.21",
+    "moment": "^2.30.1",
     "node-polyfill-webpack-plugin": "^4.0.0",
     "polyfill-object.fromentries": "^1.0.1",
     "stream-browserify": "^3.0.0"
